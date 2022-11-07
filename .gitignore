@@ -1,0 +1,9 @@
+/modelsim/work
+/modelsim/glbl.v
+/modelsim/vsim.wlf
+/modelsim/wave.do
+/modelsim/simsp.cr.mti
+
+/modelsim/simsp.mpf
+!/modelsim/tb_work.v
+!/modelsim/do.tcl
