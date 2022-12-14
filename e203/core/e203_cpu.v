@@ -283,6 +283,15 @@ module e203_cpu #(
   input  test_mode,
 
   input  clk,
+
+  output [`E203_XLEN-1:0] rf_wbck_wdat_test,
+
+  `ifdef ins2sp//{
+    output wire [`sp_count+10:0] sp_out,
+    `endif//}
+  `ifdef ins2sp_copy//{
+    output wire [`sp_count_copy+10:0] sp_out,
+    `endif//}
   input  rst_n
   );
 
@@ -521,7 +530,13 @@ module e203_cpu #(
 
   e203_core u_e203_core(
     .inspect_pc            (inspect_pc),
-
+    .rf_wbck_wdat_test     (rf_wbck_wdat_test),
+    `ifdef ins2sp //{
+    .sp_out (sp_out),
+    `endif//}
+    `ifdef ins2sp_copy  //{
+    .sp_out (sp_out),
+    `endif//}
 
   `ifdef E203_HAS_CSR_NICE//{
     .nice_csr_valid (nice_csr_valid),

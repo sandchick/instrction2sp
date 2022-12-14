@@ -36,7 +36,7 @@ module e203_cpu_top(
   output inspect_mem_rsp_ready,
   output inspect_core_clk     ,
 
-  output core_csr_clk         ,
+ // output core_csr_clk         ,
 
     
 
@@ -226,10 +226,17 @@ module e203_cpu_top(
 
   // The test mode signal
   input  test_mode,
+    
+  output [`E203_XLEN-1:0] rf_wbck_wdat_test,
 
   // The Clock
   input  clk,
-
+`ifdef ins2sp//{
+  output wire [`sp_count+10:0]sp_out,
+  `endif //}
+`ifdef ins2sp_copy//{
+  output wire [`sp_count_copy+10:0]sp_out,
+  `endif//}
   // The low-level active reset signal, treated as async
   input  rst_n
   );
@@ -253,7 +260,7 @@ module e203_cpu_top(
   
   `ifdef E203_HAS_DTCM //{
   wire  dtcm_ls;
-
+ 
   wire rst_dtcm;
   wire                          dtcm_ram_cs  ;
   wire                          dtcm_ram_we  ;
@@ -350,9 +357,12 @@ module e203_cpu_top(
     .inspect_mem_rsp_valid    (inspect_mem_rsp_valid),
     .inspect_mem_rsp_ready    (inspect_mem_rsp_ready),
     .inspect_core_clk         (inspect_core_clk     ),
-
+.rf_wbck_wdat_test (rf_wbck_wdat_test ),
 
     .core_csr_clk          (core_csr_clk      ),
+`ifdef ins2sp //{
+  .sp_out (sp_out),
+  `endif //}
 
 
     .tm_stop (tm_stop),

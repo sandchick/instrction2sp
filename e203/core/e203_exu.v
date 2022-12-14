@@ -191,9 +191,19 @@ module e203_exu(
   input                       nice_rsp_multicyc_err   ,
   `endif//}
 
+  `ifdef ins2sp//{
+    output wire  [`sp_count+10:0] sp_out,
+    `endif//}
+  `ifdef ins2sp_copy//{
+    output wire [`sp_count_copy+10:0] sp_out,
+    `endif//}
+
   input  test_mode,
   input  clk_aon,
   input  clk,
+  //just for DC
+  output [`E203_XLEN-1:0] rf_wbck_wdat_test,
+  // end test
   input  rst_n
   );
 
@@ -520,7 +530,6 @@ module e203_exu(
 
 
   `ifdef ins2sp//{
-  wire [`sp_count+10 :0] sp_out; 
     ins2sp  # (
       .width_rs (`E203_XLEN)
      ,.width_rdidx (`E203_RFIDX_WIDTH) 
@@ -761,6 +770,18 @@ module e203_exu(
     .rst_n               (rst_n        ) 
   );
 
+  `ifdef ins2sp_copy //{
+    ins2sp_copy u_ins2sp_copy(
+    .i_ir      (i_ir    ),
+    .i_pc         (i_pc    ),
+    .i_rs1idx (i_rs1idx ),
+    .i_rs2idx (i_rs2idx ),
+    .rf_wbck_ena (rf_wbck_ena),
+    .rf_wbck_rdidx (rf_wbck_rdidx),
+    .rf_wbck_wdat (rf_wbck_wdat),
+    .sp_out (sp_out)
+  );
+ `endif// } 
   //////////////////////////////////////////////////////////////
   // Instantiate the Commit
   wire [`E203_ADDR_SIZE-1:0] cmt_badaddr;

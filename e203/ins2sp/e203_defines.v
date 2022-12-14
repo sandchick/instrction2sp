@@ -784,12 +784,12 @@
   `endif
 
 
-  `define ins2sp
-  `ifdef ins2sp
-    `define sp_count 21
-  `endif 
-
- // `define ins2sp_copy
- // `ifdef ins2sp_copy
- //   `define sp_count_copy 21 
- // `endif
+//  `define ins2sp
+//  `ifdef ins2sp
+//    `define sp_count 21
+//  `endif 
+//  
+  `define ins2sp_copy
+  `ifdef ins2sp_copy
+    `define sp_count_copy 21 
+  `endif

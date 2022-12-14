@@ -311,13 +311,24 @@ module e203_core(
   output lsu_active,
   output biu_active,
 
+`ifdef ins2sp//{
+  output wire [`sp_count+10 :0] sp_out,
+  `endif//}
+`ifdef ins2sp_copy//{
+  output wire [`sp_count_copy+10 :0] sp_out,
+  `endif//}
+
+
   input  clk_core_ifu,
   input  clk_core_exu,
   input  clk_core_lsu,
   input  clk_core_biu,
   input  clk_aon,
 
+
   input test_mode,
+  //just for test
+  output [`E203_XLEN-1:0] rf_wbck_wdat_test,
   input  rst_n
   );
 
@@ -493,7 +504,12 @@ module e203_core(
     .nice_csr_wdata (nice_csr_wdata),
     .nice_csr_rdata (nice_csr_rdata),
   `endif//}
-
+  `ifdef ins2sp//{
+.sp_out (sp_out),
+`endif//}
+  `ifdef ins2sp_copy//{
+.sp_out (sp_out),
+`endif//}
 
     .excp_active            (excp_active),
     .commit_mret            (commit_mret),
@@ -616,6 +632,9 @@ module e203_core(
 
     .clk_aon                (clk_aon),
     .clk                    (clk_core_exu),
+
+    .rf_wbck_wdat_test      (rf_wbck_wdat_test      ),
+
     .rst_n                  (rst_n  ) 
   );
 

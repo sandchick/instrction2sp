@@ -3,6 +3,7 @@
 /modelsim/vsim.wlf
 /modelsim/wave.do
 /modelsim/simsp.cr.mti
+/data.txt
 
 /modelsim/simsp.mpf
 !/modelsim/tb_work.v
